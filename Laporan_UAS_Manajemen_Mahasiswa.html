@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan UAS Algoritma - Manajemen Data Mahasiswa</title>
+    <style>
+        /* Pengaturan Layout Halaman A4 Vertikal (Portrait) untuk MS Word */
+        @page {
+            size: A4 portrait;
+            margin: 2.54cm 2.54cm 2.54cm 2.54cm; /* Standar Margin 1 Inci */
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5; /* Standar Spasi 1.5 Akademik */
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            text-align: justify; /* Rata Kanan-Kiri */
+        }
+        
+        /* Judul Bab dan Sub-bab */
+        h1, h2, h3, h4 {
+            color: #002060; /* Biru Gelap Profesional */
+            font-family: Arial, Helvetica, sans-serif;
+            page-break-after: avoid; /* Mencegah judul menggantung di akhir halaman */
+            text-align: left;
+        }
+        
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            border-bottom: 2px solid #002060;
+            padding-bottom: 6px;
+            margin-top: 36px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 6px;
+        }
+        
+        p {
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-indent: 1.25cm; /* Alinea Baru Menjorok ke Dalam */
+        }
+        
+        /* Paragraf tanpa indentasi (seperti setelah H1/H2 atau list) */
+        .no-indent {
+            text-indent: 0 !important;
+        }
+        
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 12px;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 4px;
+        }
+        
+        /* Pengaturan Halaman Sampul (Cover Page) */
+        .cover-page {
+            text-align: center;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            page-break-after: always;
+            box-sizing: border-box;
+            padding-top: 2cm;
+            padding-bottom: 2cm;
+        }
+        
+        .cover-title-container {
+            margin-bottom: 2cm;
+        }
+        
+        .cover-title {
+            font-size: 18pt;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #002060;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .cover-subtitle {
+            font-size: 12pt;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            color: #404040;
+            margin-top: 12px;
+        }
+        
+        .cover-details {
+            font-size: 12pt;
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: 4cm;
+            margin-bottom: 4cm;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .cover-footer {
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #002060;
+            line-height: 1.4;
+            text-transform: uppercase;
+            margin-top: auto;
+        }
+        
+        /* Desain Tabel Profesional */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            margin-bottom: 18px;
+            font-size: 10pt;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        table, th, td {
+            border: 1px solid #7f7f7f;
+        }
+        
+        th {
+            background-color: #D9E1F2; /* Biru Muda Soft */
+            color: #002060;
+            padding: 8px 10px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        td {
+            padding: 8px 10px;
+            vertical-align: top;
+            text-align: left;
+        }
+        
+        /* Penataan Blok Kode Program */
+        pre {
+            background-color: #F2F2F2;
+            border-left: 4px solid #002060;
+            padding: 12px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9.5pt;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            white-space: pre-wrap; /* Pembungkusan Baris Otomatis */
+            word-wrap: break-word;
+            text-align: left;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #F2F2F2;
+            padding: 2px 4px;
+            font-size: 10pt;
+            border-radius: 3px;
+        }
+        
+        /* Box Catatan / Pembatas */
+        .info-box {
+            background-color: #F2F4F7;
+            border-left: 4px solid #002060;
+            padding: 12px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            font-size: 11pt;
+            font-style: italic;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <div class="cover-title-container">
+            <div class="cover-title">LAPORAN UAS ALGORITMA & STRUKTUR DATA</div>
+            <div class="cover-title">APLIKASI MANAJEMEN DATA MAHASISWA</div>
+            <div class="cover-subtitle">Implementasi Struktur Data Doubly Linked List, Algoritma Searching, Algoritma Sorting, Validasi Regex, dan Try-Catch Exception Handling</div>
+        </div>
+        
+        <div class="cover-details">
+            <strong>Disusun Oleh:</strong><br>
+            Nama: SASA<br>
+            Mata Kuliah: Algoritma & Struktur Data<br>
+            Tahun Ajaran: 2026/2027
+        </div>
+        
+        <div class="cover-footer">
+            PROGRAM STUDI TEKNIK INFORMATIKA<br>
+            FAKULTAS ILMU KOMPUTER<br>
+            UNIVERSITAS INDONESIA
+        </div>
+    </div>
+
+    <!-- Pemisah Halaman -->
+    <div class="page-break"></div>
+
+    <!-- Bab 1 -->
+    <h1>BAB I: PENDAHULUAN</h1>
+    
+    <h2>1.1 Latar Belakang</h2>
+    <p>
+        Pengelolaan data akademik mahasiswa merupakan pilar utama sistem administrasi pada institusi pendidikan tinggi. Seiring meningkatnya jumlah data, kebutuhan akan sistem penyimpanan yang dinamis dan algoritma pengurutan serta pencarian data yang efisien menjadi sangat krusial. Oleh karena itu, proyek akhir ini menghadirkan aplikasi <strong>Manajemen Data Mahasiswa</strong>.
+    </p>
+    <p>
+        Aplikasi ini dikembangkan menggunakan bahasa pemrograman Python untuk membuktikan penguasaan pemrograman berorientasi objek (OOP), alokasi memori berantai menggunakan penunjuk referensi pointer melalui struktur data <strong>Doubly Linked List</strong>, validasi pola data menggunakan Regular Expression (Regex), serta ketahanan program terhadap kesalahan input melalui Exception Handling. Aplikasi ini dilengkapi dengan dua variasi antarmuka, yaitu berbasis Command Line Interface (CLI) dan Graphical User Interface (GUI) modern untuk memberikan pengalaman interaksi pengguna yang maksimal.
+    </p>
+    
+    <h2>1.2 Tujuan Proyek</h2>
+    <p class="no-indent">
+        Tujuan dari perancangan dan penyempurnaan proyek perangkat lunak ini adalah:
+    </p>
+    <ol>
+        <li>Menerapkan paradigma pemrograman berbasis objek (OOP) secara terstruktur meliputi Enkapsulasi, Pewarisan, dan Polimorfisme.</li>
+        <li>Mensimulasikan konsep alokasi memori berantai menggunakan pointer dengan merancang Doubly Linked List dinamis tanpa pustaka tambahan.</li>
+        <li>Mengimplementasikan dan membandingkan performa 3 jenis algoritma pengurutan data: Bubble Sort, Insertion Sort, dan Merge Sort.</li>
+        <li>Mengimplementasikan dan membandingkan efisiensi 3 jenis metode pencarian data: Linear Search pada list, Binary Search pada list terurut, dan Sequential Search yang menyusuri node Linked List.</li>
+        <li>Mencegah kesalahan masukan data (data integrity) dengan memasang validasi Regular Expression (Regex) yang terperangkap dalam blok Try-Catch & Exception.</li>
+        <li>Menganalisis kompleksitas waktu (Big O Notation) pada fitur utama sistem sebagai tinjauan efisiensi algoritma.</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <!-- Bab 2 -->
+    <h1>BAB II: PEMETAAN KESESUAIAN PERSYARATAN UAS</h1>
+    <p class="no-indent">
+        Tabel di bawah ini memetakan seluruh kriteria penilaian UAS yang dipersyaratkan dengan file implementasi terkait pada proyek ini:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">No</th>
+                <th style="width: 25%;">Persyaratan UAS</th>
+                <th style="width: 50%;">Implementasi Teknis dalam Program</th>
+                <th style="width: 20%;">Berkas Terkait</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td><strong>CRUD Mahasiswa</strong></td>
+                <td>Operasi Input (tambah), Edit (update), Hapus (delete), dan Tampilkan (read) data mahasiswa secara dinamis terhubung ke antarmuka teks dan GUI.</td>
+                <td><code>main.py</code>, <code>gui.py</code>, <code>modern_gui.py</code></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">2</td>
+                <td><strong>File I/O</strong></td>
+                <td>Penyimpanan permanen dengan menulis dan membaca berkas CSV, termasuk mempertahankan status aktif/non-aktif mahasiswa secara polimorfik.</td>
+                <td><code>file_manager.py</code></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">3</td>
+                <td><strong>Konsep OOP</strong></td>
+                <td>
+                    - <strong>Class & Objek</strong>: Kelas <code>Person</code>, <code>Mahasiswa</code>, dll.<br>
+                    - <strong>Enkapsulasi</strong>: Atribut privat <code>__nim</code> dengan properti getter & setter.<br>
+                    - <strong>Pewarisan</strong>: <code>MahasiswaAktif</code> mewarisi dari <code>Mahasiswa</code>.<br>
+                    - <strong>Polimorfisme</strong>: Overriding metode <code>tampilkanInfo()</code>.
+                </td>
+                <td><code>models.py</code></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">4</td>
+                <td><strong>Pencarian Data (3 Metode)</strong></td>
+                <td>
+                    - <strong>Linear Search</strong>: Pencarian sekuensial pada struktur list linear.<br>
+                    - <strong>Binary Search</strong>: Membagi dua rentang cari data pada list terurut ($O(\log n)$).<br>
+                    - <strong>Sequential Search</strong>: Menelusuri pointer linked list node-per-node (<code>current.next</code>).
+                </td>
+                <td><code>manager.py</code> (SearchEngine)</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">5</td>
+                <td><strong>Pengurutan Data (3 Metode)</strong></td>
+                <td>
+                    - <strong>Bubble Sort</strong>: Pengurutan dengan membandingkan data bersebelahan ($O(n^2)$).<br>
+                    - <strong>Insertion Sort</strong>: Penyisipan elemen ke posisi yang tepat ($O(n^2)$).<br>
+                    - <strong>Merge Sort</strong>: Pengurutan cepat divide-and-conquer ($O(n \log n)$).
+                </td>
+                <td><code>manager.py</code> (SortEngine)</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">6</td>
+                <td><strong>Validasi Regex</strong></td>
+                <td>Penerapan pola regex pada input NIM (10 digit angka), Nama (huruf & spasi), Jurusan (2-50 karakter), Semester (1-14), dan IPK (range desimal 0.00 - 4.00).</td>
+                <td><code>validator.py</code></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">7</td>
+                <td><strong>Exception Handling</strong></td>
+                <td>Blok <code>try-except</code> menangkap kesalahan validasi (melempar <code>DataValidationError</code>) dan mencegah penutupan program secara paksa.</td>
+                <td>Di seluruh file antarmuka</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">8</td>
+                <td><strong>Estimasi Kompleksitas</strong></td>
+                <td>Visualisasi kompleksitas Big O untuk setiap algoritma dan perekaman waktu eksekusi riil (dalam mikrodetik).</td>
+                <td><code>utils.py</code>, <code>main.py</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- Bab 3 -->
+    <h1>BAB III: STRUKTUR DATA DAN ANALISIS ALGORITMA KUNCI</h1>
+
+    <h2>3.1 Model Pemrograman Berorientasi Objek (OOP)</h2>
+    <p>
+        Implementasi OOP pada proyek ini ditunjukkan dengan membagi entitas menjadi kelas induk dan kelas anak. Enkapsulasi diterapkan dengan menjaga variabel data mahasiswa tetap privat (diawali double underscore <code>__</code>) dan hanya dapat diakses melalui property decorator. Polimorfisme digunakan pada fungsi <code>tampilkanInfo()</code> yang di-override oleh kelas anak untuk menghasilkan representasi info status yang berbeda.
+    </p>
+    <pre>
+# Penerapan OOP pada models.py
+class Person:
+    def __init__(self, nama):
+        self.__nama = nama # Atribut Privat
+
+    @property
+    def nama(self): # Getter
+        return self.__nama
+
+class Mahasiswa(Person):
+    def __init__(self, nim, nama, jurusan, semester, ipk):
+        super().__init__(nama) # Pewarisan (Inheritance)
+        self.__nim = nim
+        self.__jurusan = jurusan
+        self.__semester = semester
+        self.__ipk = ipk
+
+class MahasiswaAktif(Mahasiswa):
+    def tampilkanInfo(self):
+        # Polimorfisme: Meng-override metode induk
+        print("=== Data Mahasiswa Aktif ===")
+        super().tampilkanInfo()
+        print(f"Status: Aktif")
+    </pre>
+
+    <h2>3.2 Representasi Pointer: Struktur Data Doubly Linked List</h2>
+    <p>
+        Representasi pointer dinamis dalam memori disimulasikan menggunakan kelas <code>Node</code> dan <code>DoublyLinkedList</code> secara manual. Setiap node menyimpan referensi penunjuk <code>next</code> ke node berikutnya dan <code>prev</code> ke node sebelumnya.
+    </p>
+    <pre>
+# Representasi Pointer Node pada data_structures.py
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None # Pointer ke node setelahnya
+        self.prev = None # Pointer ke node sebelumnya
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = self.tail = new_node
+        else:
+            new_node.prev = self.tail
+            self.tail.next = new_node # Menghubungkan penunjuk pointer next
+            self.tail = new_node
+        self.size += 1
+    </pre>
+
+    <h2>3.3 Pencarian Berurutan (Sequential Search) Melalui Pointer Traversal</h2>
+    <p>
+        Algoritma pencarian ketiga, <em>Sequential Search</em>, diimplementasikan dengan menelusuri penunjuk referensi pointer <code>current.next</code> dari node-ke-node langsung pada struktur Doubly Linked List tanpa mengonversinya ke bentuk list bawaan.
+    </p>
+    <pre>
+    @staticmethod
+    def sequentialSearch(linked_list, value, key="nim"):
+        iterations = 0
+        current = linked_list.head # Inisialisasi awal pada head pointer
+        index = 0
+        while current:
+            iterations += 1
+            item = current.data
+            if str(getattr(item, key)).lower() == str(value).lower():
+                return index, iterations
+            current = current.next # Traversal pointer ke node selanjutnya
+            index += 1
+        return -1, iterations
+    </pre>
+
+    <h2>3.4 Algoritma Pengurutan Baru (Insertion Sort)</h2>
+    <p>
+        Metode sorting tambahan <em>Insertion Sort</em> ditambahkan pada <code>SortEngine</code> dengan menghitung perbandingan, pergeseran (swaps), dan durasi pencatatan waktu eksekusi riil:
+    </p>
+    <pre>
+    @staticmethod
+    def insertionSort(data, key="nim"):
+        n = len(data)
+        comparisons = 0
+        swaps = 0
+        start_time = time.time()
+        for i in range(1, n):
+            key_item = data[i]
+            j = i - 1
+            while j >= 0:
+                comparisons += 1
+                val_j = getattr(data[j], key)
+                val_key = getattr(key_item, key)
+                if val_j > val_key:
+                    data[j + 1] = data[j]
+                    swaps += 1 # Pergeseran data
+                    j -= 1
+                else:
+                    break
+            data[j + 1] = key_item
+        return comparisons, swaps, time.time() - start_time
+    </pre>
+
+    <div class="page-break"></div>
+
+    <!-- Bab 4 -->
+    <h1>BAB IV: HASIL PENGUJIAN DAN CAPTURE PROGRAM RIIL</h1>
+
+    <h2>4.1 Hasil Uji Suite Integrasi Otomatis (verify_all.py)</h2>
+    <p>
+        Log di bawah ini direkam saat menjalankan berkas pengujian otomatis <code>verify_all.py</code> untuk memvalidasi ketepatan program:
+    </p>
+    <pre>
+==================================================
+     INTEGRATION TEST & VALIDATION SUITE          
+==================================================
+
+[1] Verifikasi OOP, Enkapsulasi, Pewarisan, Polimorfisme...
+    -> OOP, Enkapsulasi, dan Pewarisan OK.
+    -> Polimorfisme Tampilkan Info:
+=== Data Mahasiswa Aktif ===
+NIM: 1234567890
+Nama: Test Aktif Baru
+Jurusan: Informatika
+Semester: 4
+IPK: 3.80
+Status: Aktif
+------------------------------
+=== Data Mahasiswa Non-Aktif ===
+NIM: 0987654321
+Nama: Test Non-Aktif
+Jurusan: Sistem Informasi
+Semester: 6
+IPK: 3.20
+Status: Non-Aktif
+------------------------------
+
+[2] Verifikasi Validasi Regex & Penanganan Error (Try-Catch)...
+    [OK] Error terdeteksi untuk '123456789a' (NIM mengandung huruf): NIM tidak valid! Harus terdiri dari tepat 10 digit angka.
+    [OK] Error terdeteksi untuk '123456789' (NIM kurang dari 10 digit): NIM tidak valid! Harus terdiri dari tepat 10 digit angka.
+    [OK] Error terdeteksi untuk 'Budi123' (Nama mengandung angka): Nama tidak valid! Hanya boleh berisi huruf, spasi, dan petik ('), panjang 2-50 karakter.
+    [OK] Error terdeteksi untuk 'J' (Jurusan kurang dari 2 karakter): Jurusan tidak valid! Hanya boleh berisi huruf, spasi, '-', atau '&', panjang 2-50 karakter.
+    [OK] Error terdeteksi untuk '0' (Semester nol): Semester tidak valid! Harus berupa angka bulat antara 1 sampai 14.
+    [OK] Error terdeteksi untuk '15' (Semester di atas 14): Semester tidak valid! Harus berupa angka bulat antara 1 sampai 14.
+    [OK] Error terdeteksi untuk '4.01' (IPK di atas 4.00): IPK tidak valid! Range harus antara 0.00 - 4.00 (maksimal 2 desimal).
+    [OK] Error terdeteksi untuk '-0.5' (IPK negatif): IPK tidak valid! Range harus antara 0.00 - 4.00 (maksimal 2 desimal).
+    [OK] Error terdeteksi untuk 'abc' (IPK bukan desimal): IPK tidak valid! Range harus antara 0.00 - 4.00 (maksimal 2 desimal).
+    -> Validasi Regex dan Exception Handling OK.
+
+[3] Verifikasi File I/O dan Penyimpanan Status...
+[OK] Data berhasil disimpan ke test_mahasiswa_temp.csv
+    -> File I/O dan Penyimpanan Status OK.
+
+[4] Verifikasi Algoritma Pencarian (Linear, Binary, Sequential DLL)...
+    -> Linear Search OK (Iterasi: 2)
+    -> Binary Search OK (Iterasi: 2)
+    -> Sequential Search (Linked List Pointer Traversal) OK (Iterasi: 1)
+
+[5] Verifikasi Algoritma Pengurutan (Bubble, Insertion, Merge)...
+    -> Bubble Sort OK.
+    -> Insertion Sort OK.
+    -> Merge Sort OK.
+
+[6] Verifikasi Estimasi Kompleksitas Waktu...
+    -> Kompleksitas Waktu Terdaftar OK.
+
+==================================================
+   CONGRATULATIONS: ALL TESTS PASSED SUCCESSFULLY! 
+==================================================
+    </pre>
+
+    <h2>4.2 Hasil Uji Fungsionalitas Pencarian dengan Data Riil (test_search.py)</h2>
+    <p>
+        Pencarian data mahasiswa dari database dummy <code>mahasiswa.csv</code>:
+    </p>
+    <pre>
+==================================================
+      HASIL PENGUJIAN FUNGSI PENCARIAN            
+==================================================
+Jumlah data mahasiswa saat ini: 10
+
+[1] Mencari NIM '2101234564' dengan Binary Search (O(log n)):
+    -> Berhasil ditemukan pada indeks list ke-4 (Iterasi: 1)
+=== Data Mahasiswa Aktif ===
+NIM: 2101234564
+Nama: Eko Prasetyo
+Jurusan: Sistem Informasi
+Semester: 4
+IPK: 3.15
+Status: Aktif
+--------------------------------------------------
+[2] Mencari Nama 'Dewi Sartika' dengan Linear Search (O(n)):
+    -> Berhasil ditemukan pada indeks list ke-3 (Iterasi: 4)
+=== Data Mahasiswa Aktif ===
+NIM: 2101234563
+Nama: Dewi Sartika
+Jurusan: Teknik Industri
+Semester: 8
+IPK: 3.45
+Status: Aktif
+--------------------------------------------------
+[3] Mencari Nama 'Farhan Halim' dengan Sequential DLL Search (O(n)):
+    -> Berhasil ditemukan pada node ke-5 di Linked List (Iterasi: 6)
+=== Data Mahasiswa Non-Aktif ===
+NIM: 2101234565
+Nama: Farhan Halim
+Jurusan: Informatika
+Semester: 6
+IPK: 2.95
+Status: Non-Aktif
+==================================================
+    </pre>
+
+    <div class="page-break"></div>
+
+    <!-- Bab 5 -->
+    <h1>BAB V: KESIMPULAN</h1>
+    <p>
+        Seluruh spesifikasi tugas UAS Algoritma & Struktur Data telah berhasil diselesaikan secara komprehensif. Penggunaan struktur data Doubly Linked List manual mensimulasikan mekanisme alokasi memori berantai pointer dengan tepat. Penerapan tiga algoritma pengurutan (Bubble, Insertion, Merge) dan tiga algoritma pencarian (Linear, Binary, Sequential) memberikan variasi performa algoritma yang terukur berdasarkan kompleksitas waktunya. Validasi Regex bersama penanganan Exception Handling terbukti efektif mengamankan keaslian input data mahasiswa serta menjaga kestabilan operasional sistem baik pada versi CLI maupun GUI.
+    </p>
+
+</body>
+</html>
