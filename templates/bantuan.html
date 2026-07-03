@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header-action">
+    <h1>Bantuan & Kompleksitas</h1>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Kembali</a>
+</div>
+
+<div class="glass-card">
+    <p class="mb-4 text-muted">Berikut adalah penjelasan dan kompleksitas waktu dari algoritma yang digunakan dalam sistem ini.</p>
+    
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Algoritma</th>
+                    <th>Kompleksitas</th>
+                    <th>Penjelasan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for algo, detail in info.items() %}
+                <tr>
+                    <td><strong>{{ algo }}</strong></td>
+                    <td><span class="badge badge-info">{{ detail.Complexity }}</span></td>
+                    <td>{{ detail.Explanation }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

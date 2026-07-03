@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header-action">
+    <h1>Cari Mahasiswa</h1>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Kembali</a>
+</div>
+
+<div class="glass-card max-w-lg mb-4">
+    <form method="POST" action="{{ url_for('cari') }}">
+        <div class="form-group">
+            <label>Metode Pencarian</label>
+            <select name="metode" id="metode" required onchange="updateKunci()">
+                <option value="1">Binary Search (O(log n)) - Berdasarkan NIM</option>
+                <option value="2">Linear Search (O(n)) - Berdasarkan Nama</option>
+                <option value="3">Sequential Search di DLL (O(n))</option>
+            </select>
+        </div>
+        
+        <div class="form-group" id="kunci-group" style="display:none;">
+            <label>Cari Berdasarkan</label>
+            <select name="kunci" id="kunci">
+                <option value="nim">NIM</option>
+                <option value="nama">Nama</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Nilai Pencarian</label>
+            <input type="text" name="nilai" required placeholder="Masukkan kata kunci...">
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Mulai Pencarian</button>
+    </form>
+</div>
+
+{% if result %}
+<div class="glass-card">
+    <h3 class="mb-3">Hasil Pencarian:</h3>
+    {% if stats %}
+    <div class="stats-box mb-4">
+        <p><strong>Metode:</strong> {{ stats.metode }}</p>
+        <p><strong>Jumlah Iterasi:</strong> <span class="badge badge-info">{{ stats.iterasi }}</span></p>
+    </div>
+    {% endif %}
+    
+    <table class="table">
+        <tr><th>NIM</th><td>{{ result.nim }}</td></tr>
+        <tr><th>Nama</th><td>{{ result.nama }}</td></tr>
+        <tr><th>Jurusan</th><td>{{ result.jurusan }}</td></tr>
+        <tr><th>Semester</th><td>{{ result.semester }}</td></tr>
+        <tr><th>IPK</th><td>{{ "%.2f"|format(result.ipk) }}</td></tr>
+        <tr><th>Status</th><td><span class="badge {% if result.status == 'Aktif' %}badge-success{% else %}badge-danger{% endif %}">{{ result.status }}</span></td></tr>
+    </table>
+</div>
+{% endif %}
+
+<script>
+function updateKunci() {
+    const metode = document.getElementById('metode').value;
+    const kunciGroup = document.getElementById('kunci-group');
+    if (metode === '3') {
+        kunciGroup.style.display = 'block';
+    } else {
+        kunciGroup.style.display = 'none';
+        // Auto set for other methods in backend anyway
+    }
+}
+// Init state
+document.addEventListener('DOMContentLoaded', updateKunci);
+</script>
+{% endblock %}

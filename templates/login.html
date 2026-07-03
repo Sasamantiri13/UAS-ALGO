@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container">
+    <div class="glass-card login-card">
+        <h1 class="text-center">Sistem Akademik</h1>
+        <p class="text-center text-muted">Login untuk mengelola data mahasiswa</p>
+        
+        <form method="POST" action="{{ url_for('login') }}" class="login-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" required placeholder="admin" autofocus>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="admin123">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

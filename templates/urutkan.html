@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header-action">
+    <h1>Urutkan Data Mahasiswa</h1>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Kembali</a>
+</div>
+
+<div class="glass-card mb-4">
+    <form method="POST" action="{{ url_for('urutkan') }}" class="inline-form" style="display:flex; gap:15px; align-items:flex-end;">
+        <div class="form-group mb-0" style="flex:1;">
+            <label>Metode Pengurutan</label>
+            <select name="pilihan" required>
+                <option value="1">NIM (Bubble Sort - O(n²))</option>
+                <option value="2">NIM (Insertion Sort - O(n²))</option>
+                <option value="3">Nama (Merge Sort - O(n log n))</option>
+                <option value="4">IPK (Merge Sort - O(n log n))</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="height:42px;">Urutkan Sekarang</button>
+    </form>
+</div>
+
+{% if stats %}
+<div class="glass-card mb-4 stats-grid">
+    <div class="stat-item">
+        <h4>Metode</h4>
+        <p>{{ stats.metode }}</p>
+    </div>
+    <div class="stat-item">
+        <h4>Perbandingan</h4>
+        <p class="text-info">{{ stats.perbandingan }}</p>
+    </div>
+    <div class="stat-item">
+        <h4>Penukaran/Move</h4>
+        <p class="text-warning">{{ stats.penukaran }}</p>
+    </div>
+    <div class="stat-item">
+        <h4>Waktu Eksekusi</h4>
+        <p class="text-success">{{ stats.waktu }} s</p>
+    </div>
+</div>
+{% endif %}
+
+<div class="glass-card">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>NIM</th>
+                    <th>Nama</th>
+                    <th>Jurusan</th>
+                    <th>Semester</th>
+                    <th>IPK</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.nim }}</td>
+                    <td>{{ s.nama }}</td>
+                    <td>{{ s.jurusan }}</td>
+                    <td>{{ s.semester }}</td>
+                    <td>{{ "%.2f"|format(s.ipk) }}</td>
+                    <td>
+                        <span class="badge {% if s.status == 'Aktif' %}badge-success{% else %}badge-danger{% endif %}">
+                            {{ s.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Belum ada data mahasiswa.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

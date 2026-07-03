@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Mahasiswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% if session.get('logged_in') %}
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('tambah') }}">Tambah Data</a></li>
+            <li><a href="{{ url_for('cari') }}">Cari Mahasiswa</a></li>
+            <li><a href="{{ url_for('urutkan') }}">Urutkan Data</a></li>
+            <li><a href="{{ url_for('bantuan') }}">Bantuan & Kompleksitas</a></li>
+            <li><a href="{{ url_for('logout') }}" class="text-danger">Logout</a></li>
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="main-content {% if not session.get('logged_in') %}full-width{% endif %}">
+        <!-- Flash Messages -->
+        <div class="flash-messages" id="flash-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

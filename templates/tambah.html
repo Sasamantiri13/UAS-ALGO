@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header-action">
+    <h1>Tambah Mahasiswa</h1>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Kembali</a>
+</div>
+
+<div class="glass-card max-w-lg">
+    <form method="POST" action="{{ url_for('tambah') }}">
+        <div class="form-group">
+            <label>NIM (10 digit)</label>
+            <input type="text" name="nim" required pattern="[0-9]{10}" title="Harus 10 digit angka">
+        </div>
+        
+        <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" name="nama" required minlength="2" maxlength="50">
+        </div>
+        
+        <div class="form-group">
+            <label>Jurusan</label>
+            <input type="text" name="jurusan" required minlength="2" maxlength="50">
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Semester</label>
+                <input type="number" name="semester" required min="1" max="14">
+            </div>
+            
+            <div class="form-group">
+                <label>IPK (0.00 - 4.00)</label>
+                <input type="number" name="ipk" step="0.01" required min="0" max="4">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" required>
+                <option value="aktif">Aktif</option>
+                <option value="non-aktif">Non-Aktif</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Simpan Data</button>
+    </form>
+</div>
+{% endblock %}
