@@ -12,10 +12,12 @@ app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_flask_session_uas_algo'
 
 # Initialize File Manager and Load Data
-file_manager = FileManager('mahasiswa.csv')
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+file_manager = FileManager(os.path.join(BASE_DIR, 'mahasiswa.csv'))
 manager = MahasiswaManager(file_manager.loadFromFile())
 validator = Validator()
-auth_manager = AuthManager()
+auth_manager = AuthManager(os.path.join(BASE_DIR, 'users.txt'))
 
 # --- Authentication Decorator ---
 def login_required(f):

@@ -18,9 +18,12 @@ class AuthManager:
         return users
 
     def _save_users(self, users):
-        with open(self.filename, "w") as f:
-            for u, p in users.items():
-                f.write(f"{u},{p}\n")
+        try:
+            with open(self.filename, "w") as f:
+                for u, p in users.items():
+                    f.write(f"{u},{p}\n")
+        except OSError:
+            pass # Vercel read-only filesystem
 
     def login(self, username, password):
         hashed_pw = hashlib.sha256(password.encode()).hexdigest()
